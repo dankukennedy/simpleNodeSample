@@ -1,11 +1,11 @@
 import type { Request, Response,NextFunction} from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import type{ IUser } from '../type/userTypes.js';
+import type{ IUserPayload  } from '../type/userTypes.js';
 import { asyncHandler } from '../util/asyncHandler.ts';
 
 // In-memory database (Move this to a separate file like userDatabase.ts if preferred)
-let users: IUser[] = []; 
+let users: IUserPayload [] = []; 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
 
 // --- GET ALL USERS ---
@@ -24,8 +24,8 @@ export const signupUser = asyncHandler(async (req: Request, res: Response, ) => 
     if (!role?.trim()) missingFields.push("role");
 
     if (missingFields.length > 0) {
-    return res.status(400).json({ 
-        message: `The following fields are required: ${missingFields.join(", ")}` 
+    return res.status(400).json({
+        message: `The following fields are required: ${missingFields.join(", ")}`
     });
 }
     const userExists = users.find(user => user.username === username || user.email === email);
@@ -34,7 +34,7 @@ export const signupUser = asyncHandler(async (req: Request, res: Response, ) => 
     }
 
     const hashPass = await bcrypt.hash(password, 10);
-    const newUser: IUser = {
+    const newUser: IUserPayload  = {
         id: users.length + 1,
         username,
         email,
@@ -70,15 +70,12 @@ export const deleteUser = asyncHandler(async (req: Request, res: Response) => {
     if (!id) {
         return res.status(400).json({ message: "User ID is required" });
     }
-
     const initialLength = users.length;
-
     users = users.filter(user => user.id !== parseInt(id));
 
     if (users.length === initialLength) {
         return res.status(404).json({ message: "User not found" });
     }
-
     console.log(`[DB] Deleted user ID: ${id}`);
     return res.json({ message: "User deleted successfully" });
 });
