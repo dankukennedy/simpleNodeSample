@@ -8,8 +8,6 @@ import { asyncHandler } from '../util/asyncHandler.ts';
 let users: IUser[] = []; 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
 
-
-
 // --- GET ALL USERS ---
 export const getAllUsers = asyncHandler(async(req: Request, res: Response,) => {
     console.log(`[DB] Fetching all users. Count: ${users.length}`);
@@ -19,7 +17,6 @@ export const getAllUsers = asyncHandler(async(req: Request, res: Response,) => {
 // --- SIGNUP ---
 export const signupUser = asyncHandler(async (req: Request, res: Response, ) => {
     const { username, password, email, role } = req.body;
-
     const missingFields = [];
     if (!username?.trim()) missingFields.push("username");
     if (!password?.trim()) missingFields.push("password");
@@ -31,7 +28,6 @@ export const signupUser = asyncHandler(async (req: Request, res: Response, ) => 
         message: `The following fields are required: ${missingFields.join(", ")}` 
     });
 }
-
     const userExists = users.find(user => user.username === username || user.email === email);
     if (userExists) {
         return res.status(409).json({ message: "Username or Email already exists" });
@@ -45,7 +41,6 @@ export const signupUser = asyncHandler(async (req: Request, res: Response, ) => 
         role:(role?.toLowerCase() ==='admin') ? 'admin':'user',
         password: hashPass
     };
-
     users.push(newUser);
     console.log(`[AUTH] New user registered: ${username}`);
    return res.status(201).json({ message: "User created successfully", userId: newUser.id });
