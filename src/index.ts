@@ -19,9 +19,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('API is running...');
-});
+app.get('/', (req: Request, res: Response) => { res.send('API is running...');});// Get 
 
 app.use('/api', userRoute);
 const PORT = process.env.PORT || 3000;
