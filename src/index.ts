@@ -15,7 +15,6 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, // Allow cookies if needed
 };
-
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 
