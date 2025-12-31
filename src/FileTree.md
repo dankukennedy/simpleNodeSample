@@ -2,7 +2,6 @@
 
 **Generated:** 12/31/2025, 1:57:51 AM
 
-```
 ├── 📁 src
 │   ├── 📁 controller
 │   │   └── 📄 userController.ts
@@ -21,5 +20,5 @@
 ├── ⚙️ package-lock.json
 ├── ⚙️ package.json
 └── ⚙️ tsconfig.json
-```
+
 
